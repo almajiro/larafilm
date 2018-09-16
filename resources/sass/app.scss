@@ -1,0 +1,327 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+// Variables
+@import 'variables';
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.vjs-control-bar {
+    bottom: 30px !important;
+    width: 95% !important;
+    border-radius: 50px;
+    margin: auto;
+}
+
+body {
+    background-color: #333 !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html, body {
+    margin: 0;
+    background: black;
+    font-family: 'Montserrat', helvetica, arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.movie_card a {
+
+}
+
+.movie_card {
+    position: relative;
+    display: block;
+    width: 700px;
+    height: 315px;
+    margin: 10px auto;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.4s;
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+        transition: all 0.4s;
+    }
+    .info_section {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-blend-mode: multiply;
+        z-index: 2;
+        border-radius: 10px;
+        .movie_header {
+            position: relative;
+            padding: 25px;
+            height: 40%;
+            h1 {
+                color: #fff;
+                font-weight: 400;
+            }
+            h4 {
+                color: #9ac7fa;
+                font-weight: 400;
+            }
+            .minutes {
+                display: inline-block;
+                margin-top: 10px;
+                color: #fff;
+                padding: 5px;
+                border-radius: 5px;
+                border: 1px solid rgba(255, 255, 255, 0.13);
+            }
+            .type {
+                display: inline-block;
+                color: #cee4fd;
+                margin-left: 10px;
+            }
+            .locandina {
+                position: relative;
+                float: left;
+                margin-right: 20px;
+                height: 120px;
+                box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
+            }
+        }
+        .movie_desc {
+            padding: 25px;
+            height: 50%;
+            .text {
+                color: #cfd6e1;
+            }
+        }
+        .movie_social {
+            height: 10%;
+            padding-left: 15px;
+            padding-bottom: 20px;
+            ul {
+                list-style: none;
+                padding: 0;
+                li {
+                    display: inline-block;
+                    color: rgba(255, 255, 255, 0.4);
+                    transition: color 0.3s;
+                    transition-delay: 0.15s;
+                    margin: 0 10px;
+                    &:hover {
+                        transition: color 0.3s;
+                        color: rgba(255, 255, 255, 0.8);
+                    }
+                    i {
+                        font-size: 19px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .text {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+    }
+    .blur_back {
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        height: 100%;
+        right: 0;
+        background-size: cover;
+        border-radius: 11px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .movie_header {
+        width: 80%;
+    }
+
+    .movie_desc {
+        width: 50%;
+    }
+
+    .info_section {
+        background: linear-gradient(to right, #0d0d0c 20%, transparent 100%);
+    }
+
+    .blur_back {
+        width: 80%;
+        background-position: -100% 10% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .movie_card {
+        width: 95%;
+        margin: 70px auto;
+        min-height: 350px;
+        height: auto;
+    }
+
+    .blur_back {
+        width: 100%;
+        background-position: 50% 50% !important;
+    }
+
+    .movie_header {
+        width: 100%;
+        margin-top: 85px;
+    }
+
+    .movie_desc {
+        width: 100%;
+    }
+
+    .info_section {
+        background: linear-gradient(to top, rgb(20, 20, 19) 20%, transparent 100%);
+        display: inline-grid;
+    }
+}
+
+#bright {
+    box-shadow: 0px 0px 150px -45px rgba(255, 51, 0, 0.5);
+    &:hover {
+        box-shadow: 0px 0px 120px -55px rgba(255, 51, 0, 0.5);
+    }
+}
+
+.bright_back {
+    background: url("https://occ-0-2433-448.1.nflxso.net/art/cd5c9/3e192edf2027c536e25bb5d3b6ac93ced77cd5c9.jpg");
+}
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Rubik:400,900);
+
+#card-container {
+    width: 700px;
+    height: 350px;
+    border-radius: 10px;
+}
+
+#card {
+    //animation: backAn 60s infinite;
+    color: #fff;
+    padding: 30px;
+    width: 98%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    background: url(http://riccardotartaglia.it/img/deadpool/back.jpg) 100% bottom;
+    box-shadow: 0px 45px 100px rgba(0, 0, 0, .4),
+    inset 0 0 0 1000px rgba(156, 27, 27, .6);
+    border-radius: 10px;
+    background-position: center !important;
+}
+
+#card .text-block {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0px 3px 10px rgba(0, 0, 0, .7)
+}
+
+#card .text-block h1 {
+    font-family: 'Rubik', sans-serif;
+    font-size: 3em;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+#card .text-block h1 small {
+    font-size: .4em;
+    color: #ccc;
+    position: relative;
+    bottom: 10px
+}
+
+#card .text-block h3 {
+    margin: 0;
+    font-weight: 700;
+}
+
+#card .text-block p {
+    font-weight: 300;
+    width: 60%
+}
+
+#card .text-block a {
+    //transition: all .35s cubic-bezier(.37, .26, .35, 1);
+    border: 4px solid #fff;
+    padding: 10px;
+    background: transparent;
+    font-family: 'Rubik', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 15px;
+    color: #fff
+}
+
+#card .text-block a:hover {
+    background: #B51D2A;
+}
+
+
+#card-container .pg {
+    position: absolute;
+    //height: 450px;
+    //width: 30%;
+    right: 0px;
+    bottom: 0px;
+    z-index: 2
+}
+
+@media screen and (max-width: 768px) {
+    #card-container .pg {
+        display: none;
+    }
+}
+
+#card-container .pg > img {
+    max-height: 450px;
+    max-width: 700px;
+}
+
+.shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, .4) 0%, rgba(0, 0, 0, .2) 60%);
+    z-index: 1;
+    border-radius: 10px;
+}
+
+a {
+    color: #fff;
+}
+
+@keyframes backAn {
+    0% {
+        background-size: 100%
+    }
+    50% {
+        background-size: 250%
+    }
+    100% {
+        background-size: 100%
+    }
+}
