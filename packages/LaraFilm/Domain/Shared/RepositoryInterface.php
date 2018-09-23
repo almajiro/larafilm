@@ -10,15 +10,6 @@ namespace LaraFilm\Domain\Shared;
 interface RepositoryInterface
 {
     /**
-     * Convert Persistence to Entity
-     *
-     * @param $persistence
-     *
-     * @return mixed
-     */
-    public function toEntity($persistence);
-
-    /**
      * Convert Entity to Persistence
      *
      * @param $entity

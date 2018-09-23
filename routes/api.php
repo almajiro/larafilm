@@ -18,11 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/', 'LaraFilmController@version');
-
-/*
-Route::group(['prefix' => 'anime', 'as' => 'anime.'], function () {
-    Route::get('all', 'AnimeController@index');
-});
-*/
-
-Route::resource('network', 'NetworkController');
+Route::resource('companies', 'Companies\CompaniesController');
+Route::resource('tvs', 'Tvs\TvsController');
+Route::resource('genres', 'Genres\GenresController');
+Route::resource('persons', 'Persons\PersonsController');
+Route::resource('actors', 'Actors\ActorsController');

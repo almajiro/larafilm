@@ -14,17 +14,8 @@ class CreatePersonsTable extends Migration
     public function up()
     {
         Schema::create('persons', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('imdb_id')->nullable();
+            $table->string('uuid', 36)->primary();
             $table->string('name');
-            $table->string('known_for_department')->nullable();
-            $table->date('birthday');
-            $table->date('deathday')->nullable();
-            $table->boolean('gender');
-            $table->text('biography');
-            $table->integer('popularity')->unsigned()->nullable();;
-            $table->string('place_of_birth')->nullable();
-            $table->string('homepage')->nullable();
             $table->timestamps();
         });
     }

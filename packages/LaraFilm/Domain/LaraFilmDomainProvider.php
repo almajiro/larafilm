@@ -7,12 +7,20 @@ use Illuminate\Support\ServiceProvider;
 /*
  * Repositories
  */
-use LaraFilm\Infrastructure\Repositories\NetworkRepository;
+use LaraFilm\Infrastructure\Repositories\TvRepository;
+use LaraFilm\Infrastructure\Repositories\GenreRepository;
+use LaraFilm\Infrastructure\Repositories\ActorRepository;
+use LaraFilm\Infrastructure\Repositories\PersonRepository;
+use LaraFilm\Infrastructure\Repositories\CompanyRepository;
 
 /*
  * Repository Interfaces
  */
-use LaraFilm\Domain\Models\Network\NetworkRepositoryInterface;
+use LaraFilm\Domain\Models\Tv\TvRepositoryInterface;
+use LaraFilm\Domain\Models\Genre\GenreRepositoryInterface;
+use LaraFilm\Domain\Models\Actor\ActorRepositoryInterface;
+use LaraFilm\Domain\Models\Person\PersonRepositoryInterface;
+use LaraFilm\Domain\Models\Company\CompanyRepositoryInterface;
 
 /**
  * Class LaraFilmDomainProvider
@@ -39,8 +47,28 @@ class LaraFilmDomainProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            NetworkRepositoryInterface::class,
-            NetworkRepository::class
+            TvRepositoryInterface::class,
+            TvRepository::class
+        );
+
+        $this->app->bind(
+            CompanyRepositoryInterface::class,
+            CompanyRepository::class
+        );
+
+        $this->app->bind(
+            GenreRepositoryInterface::class,
+            GenreRepository::class
+        );
+
+        $this->app->bind(
+            PersonRepositoryInterface::class,
+            PersonRepository::class
+        );
+
+        $this->app->bind(
+            ActorRepositoryInterface::class,
+            ActorRepository::class
         );
     }
 }

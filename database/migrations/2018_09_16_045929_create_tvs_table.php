@@ -14,18 +14,13 @@ class CreateTvsTable extends Migration
     public function up()
     {
         Schema::create('tvs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('uuid', 36)->primary();
             $table->string('name');
-            $table->string('original_name');
-            $table->integer('episode_run_time');
-            $table->string('homepage')->nullable();;
-            $table->text('overview');
-            $table->boolean('in_production');
-            $table->string('origin_country');
-            $table->string('original_language');
-            $table->integer('popularity')->nullable();;
-            $table->integer('vote_average')->nullable();;
-            $table->integer('vote_count')->nullable();;
+            $table->text('plot');
+            $table->string('mpaa');
+            $table->integer('year');
+            $table->integer('rating')->nullable();
+            $table->integer('votes')->nullable();
             $table->integer('status');
             $table->timestamps();
         });

@@ -14,18 +14,17 @@ class CreateSeasonsTable extends Migration
     public function up()
     {
         Schema::create('seasons', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('tv_id')->unsigned();
+            $table->string('uuid', 36)->primary();
+            $table->string('tv_uuid', 36);
             $table->string('name');
-            $table->text('overview');
-            $table->integer('season_number');
-            $table->date('air_date');
+            $table->text('plot');
+            $table->integer('season')->unsigned();
             $table->timestamps();
         });
 
         Schema::table('seasons', function (Blueprint $table) {
-            $table->foreign('tv_id')
-                ->references('id')
+            $table->foreign('tv_uuid')
+                ->references('uuid')
                 ->on('tvs')
                 ->onDelete('cascade');
         });

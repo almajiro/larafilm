@@ -19,7 +19,7 @@ class Id
      *
      * @param $id
      */
-    public function __construct($id)
+    public function __construct(string $id = null)
     {
         $this->setId($id);
     }
@@ -29,7 +29,7 @@ class Id
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId(string $id = null)
     {
         $this->id = $id;
 

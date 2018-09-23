@@ -14,20 +14,21 @@ class CreateEpisodesTable extends Migration
     public function up()
     {
         Schema::create('episodes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('season_id')->unsigned();
-            $table->string('name');
-            $table->text('overview');
-            $table->integer('episode_number');
-            $table->date('air_date');
-            $table->integer('vote_average')->nullable();
-            $table->integer('vote_count')->nullable();
+            $table->string('uuid', 36)->primary();
+            $table->string('season_uuid', 36);
+            $table->string('title');
+            $table->text('plot');
+            $table->integer('episode')->unsigned();
+
+            $table->date('aired');
+            $table->integer('rating')->nullable()->default(0);
+            $table->integer('votes')->nullable()->default(0);
             $table->timestamps();
         });
 
         Schema::table('episodes', function (Blueprint $table) {
-            $table->foreign('season_id')
-                ->references('id')
+            $table->foreign('season_uuid')
+                ->references('uuid')
                 ->on('seasons')
                 ->onDelete('cascade');
         });
