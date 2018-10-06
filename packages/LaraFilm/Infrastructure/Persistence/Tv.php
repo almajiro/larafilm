@@ -7,9 +7,11 @@ use LaraFilm\Domain\Shared\Id;
 use LaraFilm\Domain\Shared\ValueObject;
 use LaraFilm\Domain\Models\Tv\Status;
 use LaraFilm\Domain\Models\Tv\Tv as TvEntity;
+use LaraFilm\Infrastructure\Persistence\Season;
 use LaraFilm\Infrastructure\Persistence\Genre;
 use LaraFilm\Infrastructure\Persistence\Actor;
 use LaraFilm\Infrastructure\Persistence\Company;
+use LaraFilm\Infrastructure\Persistence\AssetImage;
 use LaraFilm\Interfaces\Persistence\Model;
 
 /**
@@ -28,6 +30,8 @@ use LaraFilm\Interfaces\Persistence\Model;
  * @property Company[] $studios
  * @property Genre[] $genres
  * @property Actor[] $actors
+ * @property AssetImage[] $images
+ * @property Season[] $seasons
  * @package LaraFilm\Infrastructure\Persistence
  */
 class Tv extends Model
@@ -40,7 +44,7 @@ class Tv extends Model
     /**
      * @var array
      */
-    public $with = ['actors', 'studios', 'genres'];
+    public $with = ['actors', 'studios', 'genres', 'images', 'seasons'];
 
     /**
      * The actors is related to Actor::class.
@@ -49,7 +53,8 @@ class Tv extends Model
      */
     public function actors()
     {
-        return $this->morphToMany(Actor::class,
+        return $this->morphToMany(
+            Actor::class,
             'model',
             'model_has_actors',
             'model_uuid',
@@ -67,7 +72,8 @@ class Tv extends Model
      */
     public function studios()
     {
-        return $this->morphToMany(Company::class,
+        return $this->morphToMany(
+            Company::class,
             'model',
             'model_has_studios',
             'model_uuid',
@@ -85,7 +91,8 @@ class Tv extends Model
      */
     public function genres()
     {
-        return $this->morphToMany(Genre::class,
+        return $this->morphToMany(
+            Genre::class,
             'model',
             'model_has_genres',
             'model_uuid',
@@ -97,15 +104,51 @@ class Tv extends Model
     }
 
     /**
+     * The images is related to AssetImage::class.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function images()
+    {
+        return $this->morphToMany(
+            AssetImage::class,
+            'model',
+            'model_has_images',
+            'model_uuid',
+            'image_uuid',
+            'uuid',
+            'uuid',
+            false
+        );
+    }
+
+    /**
+     * The seasons is related to Seasons::class.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function seasons()
+    {
+        return $this->hasMany(
+            Season::class,
+            'tv_uuid',
+            'uuid'
+        );
+    }
+
+    /**
      * Convert Persistence to Tv Entity.
      *
      * @return TvEntity
+     * @throws \LaraFilm\Domain\Exceptions\InvalidArgumentException
      */
     public function toEntity()
     {
         $studios = [];
         $genres = [];
         $actors = [];
+        $images = [];
+        $seasons = [];
 
         foreach ($this->studios as $studio) {
             $studios[] = $studio->toEntity();
@@ -117,6 +160,14 @@ class Tv extends Model
 
         foreach ($this->actors as $actor) {
             $actors[] = $actor->toEntity();
+        }
+
+        foreach ($this->images as $image) {
+            $images[] = $image->toEntity();
+        }
+
+        foreach ($this->seasons as $season) {
+            $seasons[] = $season->toEntity();
         }
 
         return new TvEntity(
@@ -131,6 +182,8 @@ class Tv extends Model
             $genres,
             $studios,
             $actors,
+            $images,
+            $seasons,
             $this->created_at ?? new Carbon($this->created_at) ?? null,
             $this->updated_at ?? new Carbon($this->updated_at) ?? null
 

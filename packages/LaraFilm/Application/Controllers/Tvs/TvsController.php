@@ -25,4 +25,12 @@ class TvsController extends LaraFilmController
 
         return response()->json($tvs);
     }
+
+    public function show($id)
+    {
+        $tvEntity = $this->tvService->findById($id);
+        $tv = $tvEntity->toArray();
+
+        return response()->json($tv);
+    }
 }

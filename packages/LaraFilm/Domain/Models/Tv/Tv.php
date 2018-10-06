@@ -10,6 +10,8 @@ use LaraFilm\Domain\Models\Tv\Status;
 use LaraFilm\Domain\Models\Genre\Genre;
 use LaraFilm\Domain\Models\Company\Company;
 use LaraFilm\Domain\Models\Actor\Actor;
+use LaraFilm\Domain\Models\Asset\Image;
+use LaraFilm\Domain\Models\Season\Season;
 
 /**
  * Class Tv
@@ -74,6 +76,13 @@ class Tv extends AbstractEntity
     private $actors;
 
     /**
+     * @var Image[]
+     */
+    private $images;
+
+    private $seasons;
+
+    /**
      * @var Carbon|null
      */
     private $createdAt;
@@ -94,9 +103,10 @@ class Tv extends AbstractEntity
      * @param \LaraFilm\Domain\Models\Tv\Status $status
      * @param float $rating
      * @param int $votes
-     * @param array $genres
-     * @param array $studios
-     * @param array $actors
+     * @param Genre[] $genres
+     * @param Company[] $studios
+     * @param Actor[] $actors
+     * @param Image[] $images
      * @param Carbon|null $createdAt
      * @param Carbon|null $updatedAt
      */
@@ -112,6 +122,8 @@ class Tv extends AbstractEntity
         array $genres = [],
         array $studios = [],
         array $actors = [],
+        array $images = [],
+        array $seasons = [],
         Carbon $createdAt = null,
         Carbon $updatedAt = null
     ) {
@@ -126,6 +138,8 @@ class Tv extends AbstractEntity
         $this->setGenres($genres);
         $this->setStudios($studios);
         $this->setActors($actors);
+        $this->setImages($images);
+        $this->setSeasons($seasons);
         $this->setCreatedAt($createdAt);
         $this->setUpdatedAt($updatedAt);
     }
@@ -216,6 +230,19 @@ class Tv extends AbstractEntity
     public function actors(): array
     {
         return $this->actors;
+    }
+
+    /**
+     * @return \LaraFilm\Domain\Models\Asset\Image[]
+     */
+    public function images(): array
+    {
+        return $this->images;
+    }
+
+    public function seasons(): array
+    {
+        return $this->seasons;
     }
 
     /**
@@ -415,6 +442,52 @@ class Tv extends AbstractEntity
     }
 
     /**
+     * @param array $images
+     *
+     * @return $this
+     */
+    public function setImages(array $images)
+    {
+        $this->images = [];
+
+        foreach ($images as $image) {
+            $this->addImage($image);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Image $image
+     *
+     * @return $this
+     */
+    public function addImage(Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    public function setSeasons(array $seasons)
+    {
+        $this->seasons = [];
+
+        foreach ($seasons as $season) {
+            $this->addSeason($season);
+        }
+
+        return $this;
+    }
+
+    public function addSeason(Season $seasonId)
+    {
+        $this->seasons[] = $seasonId;
+
+        return $this;
+    }
+
+    /**
      * @param Carbon|null $createdAt
      *
      * @return $this
@@ -448,6 +521,8 @@ class Tv extends AbstractEntity
         $studios = [];
         $genres = [];
         $actors = [];
+        $images = [];
+        $seasons = [];
 
         foreach ($this->studios() as $studio) {
             $studios[] = $studio->toArray();
@@ -459,6 +534,14 @@ class Tv extends AbstractEntity
 
         foreach ($this->actors() as $actor) {
             $actors[] = $actor->toArray();
+        }
+
+        foreach ($this->images() as $image) {
+            $images[] = $image->toArray();
+        }
+
+        foreach ($this->seasons() as $season) {
+            $seasons[] = $season->toArray();
         }
 
         return array(
@@ -473,6 +556,8 @@ class Tv extends AbstractEntity
             'genres' => $genres,
             'studios' => $studios,
             'actors' => $actors,
+            'images' => $images,
+            'seasons' => $seasons,
             'created_at' => $this->createdAt->format('Y/m/d H:m:s'),
             'updated_at' => $this->updatedAt->format('Y/m/d H:m:s')
         );

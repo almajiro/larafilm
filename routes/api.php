@@ -23,3 +23,7 @@ Route::resource('tvs', 'Tvs\TvsController');
 Route::resource('genres', 'Genres\GenresController');
 Route::resource('persons', 'Persons\PersonsController');
 Route::resource('actors', 'Actors\ActorsController');
+
+Route::get('episodes/{id}', 'Episodes\EpisodesController@show');
+Route::get('seasons/{id}', 'Seasons\SeasonsController@show');
+Route::get('seasons/{id}/episodes', 'Seasons\SeasonsController@episodes');

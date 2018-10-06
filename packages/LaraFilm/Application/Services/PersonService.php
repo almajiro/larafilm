@@ -6,6 +6,7 @@ use LaraFilm\Domain\Shared\Id;
 use LaraFilm\Domain\Shared\ValueObject;
 use LaraFilm\Domain\Models\Person\Person;
 use LaraFilm\Domain\Models\Person\PersonRepositoryInterface;
+use LaraFilm\Domain\Models\Asset\AssetImageRepositoryInterface;
 use LaraFilm\Interfaces\Services\PersonServiceInterface;
 
 /**
@@ -20,14 +21,19 @@ class PersonService implements PersonServiceInterface
      */
     private $personRepository;
 
+    private $assetImageRepository;
+
     /**
      * PersonService constructor.
      *
      * @param PersonRepositoryInterface $personRepository
      */
-    public function __construct(PersonRepositoryInterface $personRepository)
-    {
+    public function __construct(
+        PersonRepositoryInterface $personRepository,
+        AssetImageRepositoryInterface $assetImageRepository
+    ) {
         $this->personRepository = $personRepository;
+        $this->assetImageRepository = $assetImageRepository;
     }
 
     /**
@@ -55,15 +61,22 @@ class PersonService implements PersonServiceInterface
     /**
      * Create the person.
      *
-     * @param string $name
+     * @param array $data
      *
      * @return Person
      */
-    public function create(string $name): Person
+    public function create(array $data): Person
     {
+        $images = [];
+
+        foreach ($data['images'] as $image) {
+            $images[] = $this->assetImageRepository->findById(new Id($image));
+        }
+
         $person = new Person(
             new Id(null),
-            new ValueObject($name)
+            new ValueObject($data['name']),
+            $images
         );
 
         return $this->personRepository->save($person);

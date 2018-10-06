@@ -5,57 +5,52 @@ namespace LaraFilm\Infrastructure\Persistence;
 use Carbon\Carbon;
 use LaraFilm\Domain\Shared\Id;
 use LaraFilm\Domain\Shared\ValueObject;
-use LaraFilm\Domain\Models\Actor\Actor as ActorEntity;
-use LaraFilm\Infrastructure\Persistence\Person;
+use LaraFilm\Domain\Models\Season\Season as SeasonEntity;
+use LaraFilm\Infrastructure\Persistence\Tv;
 use LaraFilm\Interfaces\Persistence\Model;
 
 /**
- * Class Actor
+ * Class Season
  *
  * @property string $uuid
- * @property string $person_uuid
- * @property string $role
+ * @property string $tv_uuid
+ * @property int $season
+ * @property string $name
+ * @property string $plot
  * @property string $created_at
  * @property string $updated_at
  * @package LaraFilm\Infrastructure\Persistence
  */
-class Actor extends Model
+class Season extends Model
 {
     /**
      * @var string
      */
-    public $table = 'actors';
+    public $table = 'seasons';
 
     /**
-     * @var array
-     */
-    public $with = ['person'];
-
-    /**
-     * Belongs to person.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function person()
+    public function tv()
     {
         return $this->belongsTo(
-            Person::class,
-            'person_uuid',
+            Tv::class,
+            'tv_uuid',
             'uuid'
         );
     }
 
     /**
-     * Convert Persistence to Actor Entity.
-     *
-     * @return ActorEntity
+     * @return SeasonEntity
      */
-    public function toEntity(): ActorEntity
+    public function toEntity(): SeasonEntity
     {
-        return new ActorEntity(
+        return new SeasonEntity(
             new Id($this->uuid),
-            $this->person->toEntity(),
-            new ValueObject($this->role),
+            new Id($this->tv_uuid),
+            $this->season,
+            new ValueObject($this->name),
+            new ValueObject($this->plot),
             new Carbon($this->created_at),
             new Carbon($this->updated_at)
         );

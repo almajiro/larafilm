@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSeasonsTable extends Migration
+class CreateAssetImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateSeasonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('seasons', function (Blueprint $table) {
+        Schema::create('asset_images', function (Blueprint $table) {
             $table->string('uuid', 36)->primary();
-            $table->string('tv_uuid', 36);
-            $table->string('name')->nullable();
-            $table->text('plot')->nullable();
-            $table->integer('season')->unsigned();
+            $table->string('asset_uuid', 36);
+            $table->integer('type')->unsigned();
             $table->timestamps();
         });
 
-        Schema::table('seasons', function (Blueprint $table) {
-            $table->foreign('tv_uuid')
+        Schema::table('asset_images', function (Blueprint $table) {
+            $table->foreign('asset_uuid')
                 ->references('uuid')
-                ->on('tvs')
+                ->on('assets')
                 ->onDelete('cascade');
         });
     }
@@ -37,6 +35,6 @@ class CreateSeasonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seasons');
+        Schema::dropIfExists('asset_images');
     }
 }

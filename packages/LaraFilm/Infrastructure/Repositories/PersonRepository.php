@@ -116,6 +116,13 @@ class PersonRepository implements  PersonRepositoryInterface
 
         $personPersistence->name = $entity->name()->value();
 
+        $images = [];
+        foreach ($entity->images() as $image) {
+            $images[] = $image->id()->id();
+        }
+
+        $personPersistence->images()->sync($images);
+
         return $personPersistence;
     }
 }

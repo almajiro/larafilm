@@ -30,11 +30,11 @@ interface PersonServiceInterface
     /**
      * Create the person.
      *
-     * @param string $name
+     * @param array $data
      *
      * @return \LaraFilm\Domain\Models\Person\Person
      */
-    public function create(string $name): Person;
+    public function create(array $data): Person;
 
     /**
      * Delete the person.

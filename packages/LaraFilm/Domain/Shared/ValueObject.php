@@ -17,7 +17,7 @@ class ValueObject
      * ValueObject constructor.
      * @param $value
      */
-    public function __construct($value)
+    public function __construct(string $value = null)
     {
         $this->setValue($value);
     }
@@ -25,7 +25,7 @@ class ValueObject
     /**
      * @param $value
      */
-    public function setValue($value)
+    public function setValue(string $value = null)
     {
         $this->objectValue = $value;
     }

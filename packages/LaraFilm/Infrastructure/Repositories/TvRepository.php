@@ -124,6 +124,7 @@ class TvRepository implements TvRepositoryInterface
         $studios = [];
         $genres = [];
         $actors = [];
+        $images = [];
 
         foreach ($entity->studios() as $studio) {
             $studios[] = $studio->id()->id();
@@ -137,9 +138,14 @@ class TvRepository implements TvRepositoryInterface
             $actors[] = $actor->id()->id();
         }
 
+        foreach ($entity->images() as $image) {
+            $images[] = $image->id()->id();
+        }
+
         $tvPersistence->studios()->sync($studios);
         $tvPersistence->genres()->sync($genres);
         $tvPersistence->actors()->sync($actors);
+        $tvPersistence->images()->sync($images);
 
         return $tvPersistence;
     }

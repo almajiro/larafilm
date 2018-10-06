@@ -71,7 +71,8 @@ class TvService implements TvServiceInterface
             $data['votes'],
             $data['genres'],
             $data['studios'],
-            $data['actors']
+            $data['actors'],
+            $data['images']
         );
 
         return $this->tvRepository->save($tv);

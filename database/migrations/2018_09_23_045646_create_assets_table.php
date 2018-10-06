@@ -17,8 +17,6 @@ class CreateAssetsTable extends Migration
             $table->string('uuid', 36)->primary();
             $table->integer('file_type')->unsigned();
             $table->string('extension', 20);
-            $table->string('model_uuid');
-            $table->string('model_type');
             $table->timestamps();
         });
     }

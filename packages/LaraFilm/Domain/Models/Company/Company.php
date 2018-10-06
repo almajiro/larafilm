@@ -143,7 +143,7 @@ class Company extends AbstractEntity
             'id' => $this->id()->id(),
             'name' => $this->name()->value(),
             'created_at' => $this->createdAt()->format('Y/m/d H:m:s'),
-            'updated_at' => $this->updatedAt()
+            'updated_at' => $this->updatedAt()->format('Y/m/d H:m:s')
         );
     }
 }

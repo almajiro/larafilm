@@ -1,19 +1,18 @@
 <?php
 
-namespace LaraFilm\Domain\Models\Person;
+namespace LaraFilm\Domain\Models\Season;
 
 use Carbon\Carbon;
 use LaraFilm\Domain\Shared\Id;
 use LaraFilm\Domain\Shared\ValueObject;
 use LaraFilm\Domain\Shared\AbstractEntity;
-use LaraFilm\Domain\Models\Asset\Image;
 
 /**
- * Class Person
+ * Class Season
  *
- * @package LaraFilm\Domain\Models\Person
+ * @package LaraFilm\Domain\Models\Season
  */
-class Person extends AbstractEntity
+class Season extends AbstractEntity
 {
     /**
      * @var Id
@@ -21,44 +20,61 @@ class Person extends AbstractEntity
     private $id;
 
     /**
+     * @var Id
+     */
+    private $tvId;
+
+    /**
+     * @var int
+     */
+    private $season;
+
+    /**
      * @var ValueObject
      */
     private $name;
 
     /**
-     * @var
+     * @var ValueObject
      */
-    private $images;
+    private $plot;
 
     /**
-     * @var Carbon|null
+     * @var Carbon
      */
     private $createdAt;
 
     /**
-     * @var Carbon|null
+     * @var Carbon
      */
     private $updatedAt;
 
     /**
-     * Person constructor.
+     * Season constructor.
      *
      * @param Id $id
+     * @param Id $tvId;
+     * @param int $season
      * @param ValueObject $name
-     * @param Image[]
+     * @param ValueObject $plot
      * @param Carbon|null $createdAt
      * @param Carbon|null $updatedAt
      */
     public function __construct(
         Id $id,
+        Id $tvId,
+        int $season,
         ValueObject $name,
-        array $images,
+        ValueObject $plot,
         Carbon $createdAt = null,
         Carbon $updatedAt = null
-    ) {
+    )
+    {
         $this->setId($id);
+        $this->setTvId($tvId);
+        $this->setSeason($season);
         $this->setName($name);
-        $this->setImages($images);
+        $this->setPlot($plot);
         $this->setCreatedAt($createdAt);
         $this->setUpdatedAt($updatedAt);
     }
@@ -72,19 +88,35 @@ class Person extends AbstractEntity
     }
 
     /**
-     * @return ValueObject
+     * @return Id
      */
-    public function name(): ValueObject
+    public function tvId(): Id
+    {
+        return $this->tvId;
+    }
+
+    /**
+     * @return int
+     */
+    public function season(): int
+    {
+        return $this->season;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function name()
     {
         return $this->name;
     }
 
     /**
-     * @return \LaraFilm\Domain\Models\Asset\Image[]
+     * @return mixed
      */
-    public function images(): array
+    public function plot()
     {
-        return $this->images;
+        return $this->plot;
     }
 
     /**
@@ -96,9 +128,9 @@ class Person extends AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return Carbon
      */
-    public function updatedAt()
+    public function updatedAt(): Carbon
     {
         return $this->updatedAt;
     }
@@ -116,7 +148,31 @@ class Person extends AbstractEntity
     }
 
     /**
-     * @param ValueObject $name
+     * @param Id $tvId
+     *
+     * @return $this
+     */
+    public function setTvId(Id $tvId)
+    {
+        $this->tvId = $tvId;
+
+        return $this;
+    }
+
+    /**
+     * @param int $season
+     *
+     * @return $this
+     */
+    public function setSeason(int $season)
+    {
+        $this->season = $season;
+
+        return $this;
+    }
+
+    /**
+     * @param ValueObject|null $name
      *
      * @return $this
      */
@@ -128,29 +184,13 @@ class Person extends AbstractEntity
     }
 
     /**
-     * @param array $images
+     * @param ValueObject|null $plot
      *
      * @return $this
      */
-    public function setImages(array $images)
+    public function setPlot(ValueObject $plot)
     {
-        $this->images = [];
-
-        foreach ($images as $image) {
-            $this->addImage($image);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Image $image
-     *
-     * @return $this
-     */
-    public function addImage(Image $image)
-    {
-        $this->images[] = $image;
+        $this->plot = $plot;
 
         return $this;
     }
@@ -179,24 +219,16 @@ class Person extends AbstractEntity
         return $this;
     }
 
-    /**
-     * Convert to array.
-     *
-     * @return array
-     */
-    public function toArray()
+    public function toArray(): array
     {
-        $images = [];
-
-        foreach ($this->images() as $image) {
-            $images[] = $image->toArray();
-        }
-
         return array(
             'id' => $this->id()->id(),
+            'tv_id' => $this->tvId()->id(),
+            'season' => $this->season(),
             'name' => $this->name()->value(),
-            'images' => $images,
-            'created_at' => $this->createdAt->format('Y/m/d H:m:s')
+            'plot' => $this->plot()->value(),
+            'created_at' => $this->createdAt->format('Y/m/d H:m:s'),
+            'updated_at' => $this->updatedAt->format('Y/m/d H:m:s'),
         );
     }
 }

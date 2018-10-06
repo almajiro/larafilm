@@ -4,16 +4,15 @@ namespace LaraFilm\Domain\Models\Asset;
 
 use Carbon\Carbon;
 use LaraFilm\Domain\Shared\Id;
-use LaraFilm\Domain\Shared\ValueObject;
+use LaraFilm\Domain\Models\Asset\Asset;
 use LaraFilm\Domain\Shared\AbstractEntity;
-use LaraFilm\Domain\Models\Asset\Type;
 
 /**
- * Class Asset
+ * Class Image
  *
  * @package LaraFilm\Domain\Models\Asset
  */
-class Asset extends AbstractEntity
+class Image
 {
     /**
      * @var Id
@@ -21,14 +20,14 @@ class Asset extends AbstractEntity
     private $id;
 
     /**
-     * @var Type
+     * @var Asset
      */
-    private $fileType;
+    private $asset;
 
     /**
-     * @var ValueObject
+     * @var int
      */
-    private $extension;
+    private $type;
 
     /**
      * @var Carbon
@@ -41,24 +40,24 @@ class Asset extends AbstractEntity
     private $updatedAt;
 
     /**
-     * Asset constructor.
+     * Image constructor.
      *
      * @param Id $id
-     * @param Type $fileType
-     * @param ValueObject $extension
+     * @param \LaraFilm\Domain\Models\Asset\Asset $asset
+     * @param int $type
      * @param Carbon|null $createdAt
      * @param Carbon|null $updatedAt
      */
     public function __construct(
         Id $id,
-        Type $fileType,
-        ValueObject $extension,
+        Asset $asset,
+        int $type,
         Carbon $createdAt = null,
         Carbon $updatedAt = null
     ) {
         $this->setId($id);
-        $this->setFileType($fileType);
-        $this->setExtension($extension);
+        $this->setAsset($asset);
+        $this->setType($type);
         $this->setCreatedAt($createdAt);
         $this->setUpdatedAt($updatedAt);
     }
@@ -72,19 +71,19 @@ class Asset extends AbstractEntity
     }
 
     /**
-     * @return Type
+     * @return \LaraFilm\Domain\Models\Asset\Asset
      */
-    public function fileType(): Type
+    public function asset(): Asset
     {
-        return $this->fileType;
+        return $this->asset;
     }
 
     /**
-     * @return ValueObject
+     * @return int
      */
-    public function extension(): ValueObject
+    public function type(): int
     {
-        return $this->extension;
+        return $this->type;
     }
 
     /**
@@ -116,25 +115,25 @@ class Asset extends AbstractEntity
     }
 
     /**
-     * @param Type $type
+     * @param \LaraFilm\Domain\Models\Asset\Asset $asset
      *
      * @return $this
      */
-    public function setFileType(Type $type)
+    public function setAsset(Asset $asset)
     {
-        $this->fileType = $type;
+        $this->asset = $asset;
 
         return $this;
     }
 
     /**
-     * @param ValueObject $extension
+     * @param int $type
      *
      * @return $this
      */
-    public function setExtension(ValueObject $extension)
+    public function setType(int $type)
     {
-        $this->extension = $extension;
+        $this->type = $type;
 
         return $this;
     }
@@ -163,20 +162,12 @@ class Asset extends AbstractEntity
         return $this;
     }
 
-    public function localPath()
-    {
-        return storage_path('app/public/'. $this->fileType()->folder() . "/" . $this->id()->id() . '.' . $this->extension()->value());
-    }
-
-    public function publicPath()
-    {
-        return asset('storage/'. $this->fileType()->folder() . "/" . $this->id()->id() . '.' . $this->extension()->value());
-    }
-
     public function toArray(): array
     {
         return array(
-            'file' => $this->publicPath()
+            'id' => $this->id()->id(),
+            'type' => $this->type(),
+            'asset' => $this->asset()->toArray()
         );
     }
 }
