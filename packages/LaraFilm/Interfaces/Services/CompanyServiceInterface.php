@@ -28,6 +28,15 @@ interface CompanyServiceInterface
     public function findById(string $id): Company;
 
     /**
+     * Find the company by Name.
+     *
+     * @param string $name
+     *
+     * @return Company
+     */
+    public function findByName(string $name): Company;
+
+    /**
      * Create the company.
      *
      * @param string $name

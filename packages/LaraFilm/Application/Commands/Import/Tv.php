@@ -21,6 +21,8 @@ use FFMpeg\Format\Video\X264;
 use FFMpeg\Filters\Gif\GifFilters;
 use FFMpeg\Media\Gif;
 
+use LaraFilm\Infrastructure\Exceptions\RecordNotFound;
+
 class Tv extends Command
 {
     /**
@@ -192,7 +194,12 @@ class Tv extends Command
                     system('ffmpeg -y -ss ' . $video->getDurationInSeconds() / 3 . ' -t 30 -i "' . $newName . '" -i ' . storage_path('app/temp/' . 'palette.png') . ' -filter_complex "fps=10,scale=320:180,paletteuse" ' . storage_path('app/public/images/' . $thumbnailAsset->id()->id() . '.gif'));
 
                     $video = $this->ffmpeg->open('temp/' . $episode['video']);
-                    $asset = $this->assetService->create(['type' => 1, 'extension' => 'mp4']);
+
+                    //$asset = $this->assetService->create(['type' => 1, 'extension' => 'mp4']);
+
+                    $asset = $this->assetService->create(['type' => 1, 'extension' => 'm3u8']);
+
+
                     $videoAsset = $this->assetVideoService->create([
                         'assetId' => $asset->id()->id(),
                         'duration' => $duration,
@@ -202,6 +209,7 @@ class Tv extends Command
                         'fps' => $fps[0] / $fps[1]
                     ]);
 
+                    /*
                     $progressBar = $this->output->createProgressBar(100);
                     $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
 
@@ -222,6 +230,43 @@ class Tv extends Command
                         ->withVisibility('public')
                         ->inFormat($format)
                         ->save('public/videos/' . $asset->id()->id() . '.' . $asset->extension()->value());
+                    $progressBar->finish();
+                    echo PHP_EOL;
+
+                    */
+
+
+                    //$lowBitrate = (new X264('libmp3lame'))->setKiloBitrate(250);
+                    $highBitrate = new X264('aac');
+
+                    $progressBar = $this->output->createProgressBar(100);
+                    $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
+
+                    $videoPercentage = 0;
+                    $progressBar->start();
+
+                    $exporter = $this->ffmpeg->open('temp/' . $episode['video'])
+                        ->exportForHLS()
+                        /*
+                        ->addFormat($lowBitrate, function($media) {
+                            $media->addFilter(function ($filters) {
+                                $filters->resize(new \FFMpeg\Coordinate\Dimension(640, 480));
+                            });
+                        })
+                        */
+                        ->addFormat($highBitrate, function($media) {
+                            $media->addFilter(function ($filters) {
+                                $filters->resize(new \FFMpeg\Coordinate\Dimension(1280, 960));
+                            });
+                        })
+                        ->onProgress(function($percentage) use (&$progressBar, &$videoPercentage) {
+                            if ($videoPercentage != $percentage) {
+                                $videoPercentage = $percentage;
+                                $progressBar->advance();
+                            }
+                        })
+                        ->save('public/videos/' . $asset->id()->id() . '.' . $asset->extension()->value());
+
                     $progressBar->finish();
                     echo PHP_EOL;
 
@@ -304,7 +349,13 @@ class Tv extends Command
         ];
 
         $this->info('Add new Company.');
-        $company = $this->companyService->create($info['studio']);
+
+        try {
+            $company = $this->companyService->findByName($info['studio']);
+        } catch (RecordNotFound $e) {
+            $company = $this->companyService->create($info['studio']);
+        }
+
         $studios = [$company];
 
         $genres = [];
@@ -313,6 +364,7 @@ class Tv extends Command
 
         $client = new Client();
 
+        /*
         foreach ($info['actor'] ?? [] as $actor) {
             $actorImage = false;
 
@@ -349,6 +401,7 @@ class Tv extends Command
             ]);
             $actors[] = $this->actorService->create($person->id()->id(), $actor['role']);
         }
+        */
 
         if (!is_array($info['genre'])) {
             $genre = $info['genre'];

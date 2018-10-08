@@ -53,6 +53,11 @@ class CompanyService implements CompanyServiceInterface
         return $this->companyRepository->findById(new Id($id));
     }
 
+    public function findByName(string $name): Company
+    {
+        return $this->companyRepository->findByName(new ValueObject($name));
+    }
+
     /**
      * Create the company.
      *

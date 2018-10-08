@@ -5,7 +5,9 @@ namespace LaraFilm\Infrastructure\Repositories;
 use LaraFilm\Domain\Shared\Id;
 use LaraFilm\Domain\Models\Company\Company as CompanyEntity;
 use LaraFilm\Domain\Models\Company\CompanyRepositoryInterface;
+use LaraFilm\Domain\Shared\ValueObject;
 use LaraFilm\Infrastructure\Persistence\Company;
+use LaraFilm\Infrastructure\Exceptions\RecordNotFound;
 
 /**
  * Class CompanyRepository
@@ -52,10 +54,24 @@ class CompanyRepository implements CompanyRepositoryInterface
      * @param Id $id
      *
      * @return \LaraFilm\Domain\Models\Company\Company
+     * @throws \LaraFilm\Infrastructure\Exceptions\RecordNotFound
      */
     public function findById(Id $id): CompanyEntity
     {
         $companyPersistence = $this->companyPersistence->find($id->id());
+        $company = $companyPersistence->toEntity();
+
+        return $company;
+    }
+
+    public function findByName(ValueObject $name): CompanyEntity
+    {
+        $companyPersistence = $this->companyPersistence->where('name', '=', $name->value())->get()->first();
+
+        if ($companyPersistence == null) {
+            throw new RecordNotFound('Record Not Found');
+        }
+
         $company = $companyPersistence->toEntity();
 
         return $company;
