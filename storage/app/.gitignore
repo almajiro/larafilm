@@ -1,4 +1,4 @@
 *
-!public/
-!temp/
+!/public/
+!/temp/
 !.gitignore
