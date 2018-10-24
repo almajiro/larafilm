@@ -205,7 +205,7 @@ class Tv extends Command
                         'duration' => $duration,
                         'width' => $videoInfo->get('width'),
                         'height' => $videoInfo->get('height'),
-                        'aspectRatio' => $videoInfo->get('display_aspect_ratio'),
+                        'aspectRatio' => $videoInfo->get('display_aspect_ratio') ?? '16:9',
                         'fps' => $fps[0] / $fps[1]
                     ]);
 

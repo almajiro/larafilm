@@ -2,6 +2,7 @@
 
 namespace LaraFilm\Application\Controllers;
 
+use LaraFilm\Domain\Constants\LaraFilm;
 use LaraFilm\Interfaces\Controllers\LaraFilmController as Controller;
 
 /**
@@ -19,7 +20,8 @@ class LaraFilmController extends Controller
     public function version()
     {
         return response()->json([
-            'name' => config('app.name')
+            'name' => config('app.name'),
+            'version' => LaraFilm::VERSION
         ]);
     }
 }

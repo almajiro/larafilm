@@ -6,7 +6,7 @@ The LaraFilm is Laravel based video on demand system.
 LaraFilm is Netflix,Hulu alternative open source application. The system is based on Laravel 5.6.
 
 ## Screenshots
-coming soon...
+![Beta Screenshot](https://github.com/almajiro/larafilm/blob/master/screenshots/beta.png?raw=true)
 
 ## Contribution
 We are looking for members!

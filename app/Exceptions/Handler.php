@@ -4,7 +4,12 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Constants\Larafilm;
 
+/**
+ * Class Handler
+ * @package App\Exceptions
+ */
 class Handler extends ExceptionHandler
 {
     /**
@@ -26,11 +31,12 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
+
     /**
-     * Report or log an exception.
+     * @param Exception $exception
      *
-     * @param  \Exception  $exception
-     * @return void
+     * @return mixed|void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -46,6 +52,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($this->isHttpException($exception)) {
+            if($exception->getStatusCode() == 404) {
+                return response()->json([
+                    'status' => 'failed',
+                    'error' => [
+                        'Not allowed action'
+                    ],
+                    'version' => Larafilm::VERSION
+                ]);
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }
