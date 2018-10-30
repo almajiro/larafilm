@@ -8,6 +8,8 @@ This project is backend of larafilm. To use this backend you need setup vue fron
 
 ## Screenshots
 ![Beta Screenshot](https://github.com/almajiro/larafilm/blob/master/screenshots/beta.png?raw=true)
+### Netflix Style Carousel Slider v0.2 2018/10/30
+![ScreenShot1](https://github.com/almajiro/larafilm/blob/master/screenshots/screenshot1.png?raw=true)
 
 ## Contribution
 We are looking for members!
