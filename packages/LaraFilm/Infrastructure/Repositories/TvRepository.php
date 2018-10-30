@@ -46,12 +46,14 @@ class TvRepository implements TvRepositoryInterface
         return $tvs;
     }
 
+
     /**
      * Find the tv show.
      *
      * @param Id $id
      *
      * @return TvEntity
+     * @throws \LaraFilm\Domain\Exceptions\InvalidArgumentException
      */
     public function findById(Id $id): TvEntity
     {

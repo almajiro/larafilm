@@ -237,7 +237,7 @@ class Tv extends Command
 
 
                     //$lowBitrate = (new X264('libmp3lame'))->setKiloBitrate(250);
-                    $highBitrate = new X264('aac');
+                    $highBitrate = (new X264('aac'))->setKiloBitrate(3000);
 
                     $progressBar = $this->output->createProgressBar(100);
                     $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
@@ -257,7 +257,7 @@ class Tv extends Command
                         ->addFormat($highBitrate, function($media) {
                             $media->addFilter(function ($filters) {
                                 $filters->resize(new \FFMpeg\Coordinate\Dimension(1280, 960));
-                            });
+                            })->addFilter(['-b:a', '320']);
                         })
                         ->onProgress(function($percentage) use (&$progressBar, &$videoPercentage) {
                             if ($videoPercentage != $percentage) {
