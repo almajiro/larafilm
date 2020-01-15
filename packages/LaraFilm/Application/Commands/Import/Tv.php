@@ -16,11 +16,6 @@ use LaraFilm\Interfaces\Services\AssetVideoServiceInterface;
 use LaraFilm\Interfaces\Services\SeasonServiceInterface;
 use LaraFilm\Interfaces\Services\EpisodeServiceInterface;
 
-use Pbmedia\LaravelFFMpeg\FFMpeg;
-use FFMpeg\Format\Video\X264;
-use FFMpeg\Filters\Gif\GifFilters;
-use FFMpeg\Media\Gif;
-
 use LaraFilm\Infrastructure\Exceptions\RecordNotFound;
 
 class Tv extends Command
@@ -59,7 +54,6 @@ class Tv extends Command
 
     private $episodeService;
 
-    private $ffmpeg;
 
     /**
      * Create a new command instance.
@@ -76,8 +70,7 @@ class Tv extends Command
         AssetImageServiceInterface $assetImageService,
         AssetVideoServiceInterface $assetVideoService,
         SeasonServiceInterface $seasonService,
-        EpisodeServiceInterface $episodeService,
-        FFMpeg $ffmpeg
+        EpisodeServiceInterface $episodeService
     ) {
         parent::__construct();
 
@@ -91,7 +84,6 @@ class Tv extends Command
         $this->assetVideoService = $assetVideoService;
         $this->seasonService = $seasonService;
         $this->episodeService = $episodeService;
-        $this->ffmpeg = $ffmpeg;
     }
 
     /**

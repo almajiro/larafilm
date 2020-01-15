@@ -16,9 +16,6 @@ use LaraFilm\Interfaces\Services\AssetImageServiceInterface;
 use LaraFilm\Interfaces\Services\SeasonServiceInterface;
 use LaraFilm\Interfaces\Services\EpisodeServiceInterface;
 
-use Pbmedia\LaravelFFMpeg\FFMpeg;
-use FFMpeg\Format\Video\X264;
-
 class Video extends Command
 {
     /**
@@ -53,8 +50,6 @@ class Video extends Command
 
     private $episodeService;
 
-    private $ffmpeg;
-
     /**
      * Create a new command instance.
      *
@@ -69,8 +64,7 @@ class Video extends Command
         AssetServiceInterface $assetService,
         AssetImageServiceInterface $assetImageService,
         SeasonServiceInterface $seasonService,
-        EpisodeServiceInterface $episodeService,
-        FFMpeg $ffmpeg
+        EpisodeServiceInterface $episodeService
     ) {
         parent::__construct();
 
@@ -83,7 +77,6 @@ class Video extends Command
         $this->assetImageService = $assetImageService;
         $this->seasonService = $seasonService;
         $this->episodeService = $episodeService;
-        $this->ffmpeg = $ffmpeg;
     }
 
     /**
