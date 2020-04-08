@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use App\Constants\Larafilm;
+use LaraFilm\Domain\Constants\LaraFilm;
 
 /**
  * Class Handler
