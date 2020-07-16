@@ -1,0 +1,55 @@
+version: '3.5'
+
+x-build-args: &x-build-args
+    APP_UID: 1000
+    APP_GID: 1000
+
+x-mount: &x-mount
+    - ./:/usr/local/share/larafilm
+
+services:
+    php:
+        build:
+            context: ./docker/php
+            args: *x-build-args
+        volumes: *x-mount
+        depends_on:
+            - mysql
+
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./:/usr/local/share/larafilm
+            - ./docker/nginx/larafilm.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - 8000:80
+        depends_on:
+            - php
+
+    mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_DATABASE: larafilm
+            MYSQL_ROOT_PASSWORD: larafilm
+        volumes:
+            - mysql-vol:/var/lib/mysql
+
+    redis:
+        image: redis
+
+    adminer:
+        image: adminer
+        ports:
+            - 8080:8080
+        depends_on:
+            - mysql
+
+volumes:
+    mysql-vol:
+        driver: local
+
+networks:
+    default:
+        external:
+            name: lidc
+

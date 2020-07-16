@@ -1,29 +1,24 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "almajiro/larafilm",
+    "description": "LaraFilm",
+    "keywords": ["vod"],
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.1.3",
-        "barryvdh/laravel-cors": "^0.11.2",
-        "fideloper/proxy": "^4.0",
+        "php": "^7.2.5",
+        "fideloper/proxy": "^4.2",
+        "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0",
-        "mhor/php-mediainfo": "4.1.2",
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.0",
         "ramsey/uuid": "^3.8"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.5",
-        "beyondcode/laravel-dump-server": "^1.0",
-        "doctrine/dbal": "^2.8",
-        "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
-        "nikic/php-parser": "v4.0.3",
-        "nunomaduro/collision": "^2.0",
-        "phpunit/phpunit": "^7.0"
+        "facade/ignition": "^2.0",
+        "fzaninotto/faker": "^1.9.1",
+        "mockery/mockery": "^1.3.1",
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "classmap": [
