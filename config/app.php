@@ -176,8 +176,6 @@ return [
         /*
          * LaraFilm Service Providers...
          */
-        LaraFilm\Domain\LaraFilmDomainProvider::class,
-        LaraFilm\Application\LaraFilmApplicationProvider::class,
         //Barryvdh\Cors\ServiceProvider::class,
     ],
 

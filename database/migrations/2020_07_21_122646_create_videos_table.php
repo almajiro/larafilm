@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateAssetsTable extends Migration
+class CreateVideosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateAssetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assets', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->string('uuid', 36)->primary();
-            $table->integer('file_type')->unsigned();
-            $table->string('extension', 20);
+            $table->string('video_asset_uuid', 36);
+            $table->string('title');
+            $table->unsignedInteger('views')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateAssetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('videos');
     }
 }

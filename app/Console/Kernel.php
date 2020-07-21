@@ -13,8 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \LaraFilm\Application\Commands\Import\Tv::class,
-        \LaraFilm\Application\Commands\Import\Video::class
     ];
 
     /**
