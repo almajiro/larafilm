@@ -2,13 +2,12 @@
 
 namespace App\Exceptions;
 
-use \Throwable;
-use LaraFilm\Domain\Constants\LaraFilm;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use LaraFilm\Domain\Constants\LaraFilm;
+use Throwable;
 
 /**
- * Class Handler
- * @package App\Throwables
+ * Class Handler.
  */
 class Handler extends ExceptionHandler
 {
@@ -31,12 +30,12 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-
     /**
      * @param Throwable $exception
      *
-     * @return mixed|void
      * @throws Throwable
+     *
+     * @return mixed|void
      */
     public function report(Throwable $exception)
     {
@@ -46,8 +45,9 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable               $exception
+     *
      * @return \Illuminate\Http\Response
      */
     public function render($request, Throwable $exception)
