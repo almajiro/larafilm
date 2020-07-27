@@ -2,6 +2,8 @@
 
 namespace App\Entities\TvSeries;
 
+use App\Exceptions\LaraFilmDomainException;
+
 class TvSeriesId
 {
     private ?string $id;
@@ -13,7 +15,7 @@ class TvSeriesId
 
     static public function set(string $id) {
         if (strlen($id) != 36) {
-            // throw invalid id
+            throw new LaraFilmDomainException("The TvSeriesId length must be 36.");
         }
 
         return new self($id);
