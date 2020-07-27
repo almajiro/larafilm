@@ -26,8 +26,7 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/",
-            "LaraFilm\\": "packages/LaraFilm/"
+            "App\\": "app/"
         }
     },
     "autoload-dev": {
